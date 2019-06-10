@@ -4,9 +4,9 @@ type Queue struct {
 	Indexer
 }
 
-func NewQueue(base Base, prefix []byte, enc IntEncoding) Queue {
+func NewQueue(m Mapping, enc IntEncoding) Queue {
 	return Queue{
-		Indexer: NewIndexer(base, prefix, enc),
+		Indexer: NewIndexer(m, enc),
 	}
 }
 
