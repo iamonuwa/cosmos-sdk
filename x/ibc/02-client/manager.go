@@ -26,7 +26,7 @@ type Manager struct {
 
 func NewManager(protocol, free mapping.Base, idgen IDGenerator) Manager {
 	return Manager{
-		protocol: mapping.NewMapping(protocol, []byte("/client")),
+		protocol: mapping.NewMapping(protocol, []byte("/client/")),
 		idval:    mapping.NewValue(free, []byte("/client/id")),
 		idgen:    idgen,
 	}
