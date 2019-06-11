@@ -8,20 +8,6 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-/*
-type keypath struct {
-	keypath merkle.KeyPath
-	prefix  []byte
-}
-
-func (path keypath) _prefix(prefix []byte) (res keypath) {
-	res.keypath = path.keypath
-	res.prefix = make([]byte, len(path.prefix)+len(prefix))
-	copy(res.prefix[:len(path.prefix)], path.prefix)
-	copy(res.prefix[len(path.prefix):], prefix)
-	return
-}
-*/
 type Base struct {
 	cdc     *codec.Codec
 	storefn func(Context) KVStore
@@ -37,11 +23,6 @@ func NewBase(cdc *codec.Codec, key sdk.StoreKey) Base {
 	return Base{
 		cdc:     cdc,
 		storefn: func(ctx Context) KVStore { return ctx.KVStore(key) },
-		/*
-		   keypath: keypath{
-		   			keypath: new(KeyPath).AppendKey([]byte(key.Name()), merkle.KeyEncodingHex),
-		   		},
-		*/
 	}
 }
 
@@ -52,7 +33,7 @@ func NewBaseWithGetter(cdc *codec.Codec, storefn func(Context) KVStore) Base {
 	}
 }
 
-func (base Base) store(ctx Context) KVStore {
+func (base Base) Store(ctx Context) KVStore {
 	return prefix.NewStore(base.storefn(ctx), base.prefix)
 }
 
@@ -60,7 +41,6 @@ func (base Base) Prefix(prefix []byte) (res Base) {
 	res = Base{
 		cdc:     base.cdc,
 		storefn: base.storefn,
-		//keypath: base.keypath._prefix(prefix),
 	}
 	res.prefix = join(base.prefix, prefix)
 	return

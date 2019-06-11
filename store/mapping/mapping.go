@@ -19,7 +19,7 @@ func NewMapping(base Base, prefix []byte) Mapping {
 }
 
 func (m Mapping) store(ctx Context) KVStore {
-	return m.base.store(ctx)
+	return m.base.Store(ctx)
 }
 
 /*
